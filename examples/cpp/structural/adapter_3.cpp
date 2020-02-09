@@ -31,11 +31,11 @@ public:
 
 class WildTurkey : public Turkey {
 public:
-    virtual void gobble() {
+    void gobble() override {
         std::cout << "Gobble Gobble!!\n";
     }
 
-    virtual void fly() {
+    void fly() override {
         std::cout << "I am flying short distance!!\n";
     }
 };
@@ -45,15 +45,15 @@ class TurkeyAdapter : public Duck {
 public:
     WildTurkey turkey;
 
-    TurkeyAdapter(const WildTurkey turkey) {
+    explicit TurkeyAdapter(const WildTurkey &turkey) {
         this->turkey = turkey;
     }
 
-    virtual void quak() {
+    void quak() override {
         turkey.gobble();
     }
 
-    virtual void fly() {
+    void fly() override {
         for (int i = 0; i < 5; i++) {
             turkey.fly();
         }
@@ -63,11 +63,11 @@ public:
 
 
 int main() {
-    MallardDuck *mDuck = new MallardDuck();
+    auto *mDuck = new MallardDuck();
     mDuck->quak();
     mDuck->fly();
 
-    WildTurkey *wTurkey = new WildTurkey();
+    auto *wTurkey = new WildTurkey();
     Duck *turkeyAdapter = new TurkeyAdapter(*wTurkey);
     turkeyAdapter->fly();
     turkeyAdapter->quak();
